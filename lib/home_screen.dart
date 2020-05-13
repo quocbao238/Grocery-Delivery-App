@@ -1,3 +1,4 @@
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_delivery/custom_widget/marginBox.dart';
 import 'package:grocery_delivery/model/data.dart';
@@ -8,6 +9,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int currentIndex = 0;
+  PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -16,28 +32,84 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Color.fromRGBO(240, 240, 240, 1),
       appBar: buildAppBar(),
-      body: Padding(
-        padding: EdgeInsets.only(top: 8.0, left: 10.0, bottom: 8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              buildTitleCategories(height, szText),
-              BoxMargin(
-                isVertical: true,
-                multi: 1,
-              ),
-              buildListCategories(height, width, szText),
-              BoxMargin(isVertical: true),
-              buildTitleProduct(height, szText),
-              BoxMargin(
-                isVertical: true,
-                multi: 1,
-              ),
-              buildListContent(height, width, szText, fruits),
-              buildTitleSnack(height, szText),
-              buildListContent(height, width, szText, snacks),
-            ],
-          ),
+      body: SizedBox.expand(
+        child: PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() {
+              currentIndex = index;
+            });
+          },
+          children: <Widget>[
+            buildPageHome(height, szText, width),
+            Container(
+                child: Center(
+              child: Text("Page2", style: TextStyle(color: Colors.black, fontSize: 30.0)),
+            )),
+            Container(
+                child: Center(
+              child: Text("Page3", style: TextStyle(color: Colors.black, fontSize: 30.0)),
+            )),
+            Container(
+                child: Center(
+              child: Text("Page4", style: TextStyle(color: Colors.black, fontSize: 30.0)),
+            )),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavyBar(
+        onItemSelected: (index) {
+          setState(() {
+            currentIndex = index;
+            _pageController.animateToPage(index, duration: Duration(milliseconds: 200), curve: Curves.ease);
+          });
+        },
+        selectedIndex: currentIndex,
+        items: [
+          BottomNavyBarItem(
+              icon: Icon(Icons.home), title: Text("Home"), activeColor: Colors.green[700], inactiveColor: Colors.grey),
+          BottomNavyBarItem(
+              icon: Icon(Icons.shopping_cart),
+              title: Text("Cart"),
+              activeColor: Colors.green[700],
+              inactiveColor: Colors.grey),
+          BottomNavyBarItem(
+              icon: Icon(Icons.card_giftcard),
+              title: Text("Favorite"),
+              activeColor: Colors.green[700],
+              inactiveColor: Colors.grey),
+          BottomNavyBarItem(
+              icon: Icon(Icons.supervised_user_circle),
+              title: Text("User"),
+              activeColor: Colors.green[700],
+              inactiveColor: Colors.grey),
+        ],
+      ),
+    );
+  }
+
+  Widget buildPageHome(double height, double szText, double width) {
+    return Padding(
+      padding: EdgeInsets.only(top: 8.0, left: 10.0, bottom: 8.0),
+      child: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            buildTitleCategories(height, szText),
+            BoxMargin(
+              isVertical: true,
+              multi: 1,
+            ),
+            buildListCategories(height, width, szText),
+            BoxMargin(isVertical: true),
+            buildTitleProduct(height, szText),
+            BoxMargin(
+              isVertical: true,
+              multi: 1,
+            ),
+            buildListContent(height, width, szText, fruits),
+            buildTitleSnack(height, szText),
+            buildListContent(height, width, szText, snacks),
+          ],
         ),
       ),
     );
@@ -269,7 +341,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return AppBar(
       backgroundColor: Color.fromRGBO(69, 193, 99, 1),
       title: Text(
-        'Home',
+        nameAppbar(currentIndex),
         style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),
       ),
       centerTitle: true,
@@ -291,5 +363,9 @@ class _HomeScreenState extends State<HomeScreen> {
         )
       ],
     );
+  }
+
+  String nameAppbar(int index) {
+    return index == 0 ? "Home" : index == 1 ? "Cart" : index == 2 ? "Favorite" : index == 3 ? "User" : "";
   }
 }
