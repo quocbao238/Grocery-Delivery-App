@@ -1,6 +1,7 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_delivery/custom_widget/marginBox.dart';
+import 'package:grocery_delivery/freshPage.dart';
 import 'package:grocery_delivery/model/data.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -220,10 +221,11 @@ class _HomeScreenState extends State<HomeScreen> {
       height: height * 0.08,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
                 'Offers',
@@ -243,12 +245,24 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          Text(
-            'View More',
-            style: TextStyle(
-              color: Colors.grey[400],
-              fontWeight: FontWeight.w400,
-              fontSize: 14.0 * szText,
+          GestureDetector(
+            onTap: (){
+              Navigator.push(context,MaterialPageRoute(builder: (context) => FreshProducePage()));
+            },
+                      child: Container(      
+              height: height * 0.08,
+              width: height * 0.08,
+              
+              child: Center(
+                child: Text(
+                  'View More',
+                  style: TextStyle(
+                    color: Colors.grey[400],
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14.0 * szText,
+                  ),
+                ),
+              ),
             ),
           ),
         ],
