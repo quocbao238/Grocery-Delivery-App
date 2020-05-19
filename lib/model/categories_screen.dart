@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:grocery_delivery/custom_widget/marginBox.dart';
+import 'package:grocery_delivery/description_screen.dart';
 import 'package:grocery_delivery/model/data.dart';
 
 class CategoriesPageView extends StatefulWidget {
@@ -17,7 +19,7 @@ class _CategoriesPageViewState extends State<CategoriesPageView> {
     return Scaffold(
       backgroundColor: Color.fromRGBO(240, 240, 240, 1),
       body: Padding(
-        padding: EdgeInsets.only(left: 16.0),
+        padding: EdgeInsets.only(left: 16.0, top: 16.0),
         child: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -50,7 +52,8 @@ class _CategoriesPageViewState extends State<CategoriesPageView> {
     );
   }
 
-  Widget buildCategori(double height, double szText, dynamic list) {
+  Widget buildCategori(double height, double szText,List<Content> list
+) {
     return Container(
       height: height * 0.75,
       width: double.maxFinite,
@@ -69,15 +72,22 @@ class _CategoriesPageViewState extends State<CategoriesPageView> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Expanded(
-                      child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white),
-                    child: Stack(
-                      children: <Widget>[
-                        buildImageCategories(index),
-                        buildFavoriteButton(index),
-                      ],
+                      child: GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => DescriptionScreen(data:list[index])
+                          ));
+                        },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white),
+                      child: Stack(
+                        children: <Widget>[
+                          buildImageCategories(index),
+                          buildFavoriteButton(index),
+                        ],
+                      ),
                     ),
                   )),
                   BoxMargin(isVertical: true, multi: 1),
