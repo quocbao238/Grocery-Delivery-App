@@ -19,7 +19,6 @@
 
 <img src="https://raw.githubusercontent.com/quocbao238/Grocery-Delivery-App/master/screenshot/screen5.png" width="400"/> <img src="https://raw.githubusercontent.com/quocbao238/Grocery-Delivery-App/master/screenshot/screen6.png" width="400"/> 
 
-- Details Church's Chicken
 
 
 ### Android Version
