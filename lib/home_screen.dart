@@ -162,8 +162,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           Positioned.fill(
                               child: Center(
                                   child: Container(
-                            width: width * 0.15,
-                            height: width * 0.15,
+                            // width: width * 0.15,
+                            // height: width * 0.15,
                             child: Image(
                               image: AssetImage(
                                 list[index].imageContent,
@@ -309,8 +309,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             fit: BoxFit.fill,
                           ),
-                          height: width * 0.08,
-                          width: width * 0.08,
+                          // height: width * 0.08,
+                          // width: width * 0.08,
                         ),
                       ),
                     ),
